@@ -1,0 +1,133 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<article class="content forms-page">
+    <section class="section">
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <div class="row sameheight-container">
+                <div class="col-md-6">
+                    <div class="card card-block sameheight-item">
+                        <div class="title-block">
+                            <h3 class="title"> Personal details </h3>
+                        </div>
+                        <hr />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Input.Title"></label>
+                            @Html.DropDownListFor(model => model.Input.Title, new[]{
+                            new SelectListItem(){Text="Mr",Value="Mr"},
+                            new SelectListItem(){Text="Mrs",Value="Mrs"},
+                            new SelectListItem(){Text="Ms",Value="Ms"},
+                            }, "Select Title", new { @class = "form-control" })
+                            <span asp-validation-for="Input.Title" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.FirstName"></label>
+                            <input asp-for="Input.FirstName" class="form-control" />
+                            <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.MiddleName"></label>
+                            <input asp-for="Input.MiddleName" class="form-control" />
+                            <span asp-validation-for="Input.MiddleName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.LastName"></label>
+                            <input asp-for="Input.LastName" class="form-control" />
+                            <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.IdNo"></label>
+                            <input asp-for="Input.IdNo" class="form-control" />
+                            <span asp-validation-for="Input.IdNo" class="text-danger"></span>
+                        </div>
+                        <div>
+                            <label>
+                                <input class="radio" name="inline-radios" type="radio" asp-for="Input.Role" value="Agent" checked="checked">
+                                <span>Agent</span>
+                            </label>
+                            <label>
+                                <input class="radio" name="inline-radios" type="radio" asp-for="Input.Role" value="FieldManager">
+                                <span>Field Manager</span>
+                            </label>
+                            <label>
+                                <input class="radio" name="inline-radios" type="radio" asp-for="Input.Role" value="FieldManager">
+                                <span>Admin</span>
+                            </label>
+                            <span asp-validation-for="Input.Role" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card card-block sameheight-item">
+                        <div class="title-block">
+                            <h3 class="title"> Contact details </h3>
+                        </div>
+                        <hr />
+                        <div class="row form-group">
+                            <div class="col-6">
+                                <label asp-for="Input.ContactNo" class="control-label"></label>
+                                <input asp-for="Input.ContactNo" class="form-control" />
+                                <span asp-validation-for="Input.ContactNo" class="text-danger"></span>
+                            </div>
+                            <div class="col-6">
+                                <label asp-for="Input.HomeTel" class="control-label"></label>
+                                <input asp-for="Input.HomeTel" class="form-control" />
+                                <span asp-validation-for="Input.HomeTel" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-6">
+                                <label asp-for="Input.Street" class="control-label"></label>
+                                <input asp-for="Input.Street" class="form-control" />
+                                <span asp-validation-for="Input.Street" class="text-danger"></span>
+                            </div>
+                            <div class="col-6">
+                                <label asp-for="Input.Suburb" class="control-label"></label>
+                                <input asp-for="Input.Suburb" class="form-control" />
+                                <span asp-validation-for="Input.Suburb" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-6">
+                                <label asp-for="Input.City" class="control-label"></label>
+                                <input asp-for="Input.City" class="form-control" />
+                                <span asp-validation-for="Input.City" class="text-danger"></span>
+                            </div>
+                            <div class="col-6">
+                                <label asp-for="Input.Code" class="control-label"></label>
+                                <input asp-for="Input.Code" class="form-control" />
+                                <span asp-validation-for="Input.Code" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            <label asp-for="Input.Email"></label>
+                            <input asp-for="Input.Email" class="form-control" />
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-6">
+                                <label asp-for="Input.Password"></label>
+                                <input asp-for="Input.Password" class="form-control" />
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            </div>
+                            <div class="col-6">
+                                <label asp-for="Input.ConfirmPassword"></label>
+                                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>   
+</article>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

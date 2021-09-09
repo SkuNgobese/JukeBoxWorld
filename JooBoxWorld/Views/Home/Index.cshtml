@@ -1,0 +1,231 @@
+﻿@model IEnumerable<JooBoxWorld.Models.Voucher>
+@{
+    double totalItems = Model.ToList().Count();
+    double activeItems = Model.Where(p => !p.IsUsed && p.SellDate.Month == DateTime.Now.Month && p.SellDate.Year == DateTime.Now.Year).ToList().Count();
+    double usedItems = Model.Where(p => p.IsUsed && p.SellDate.Month == DateTime.Now.Month && p.SellDate.Year == DateTime.Now.Year).ToList().Count();
+    double sold = Model.Where(p => p.SellDate.Month == DateTime.Now.Month && p.SellDate.Year == DateTime.Now.Year).ToList().Count();
+    var monthVouchers = Model.Where(p => p.SellDate.Month == DateTime.Now.Month && p.SellDate.Year == DateTime.Now.Year);
+    double monthlyRevenue = 0;
+    foreach (var item in monthVouchers)
+    {
+        monthlyRevenue += item.Amount;
+    }
+    double TotalRev = 0;
+    foreach (var item in Model)
+    {
+        TotalRev += item.Amount;
+    }
+    double RevPerc = TotalRev == 0 ? 0 : Math.Round(monthlyRevenue / TotalRev * 100);
+    double activePerc = totalItems == 0 ? 0 : Math.Round(activeItems / sold * 100);
+    double usedPerc = totalItems == 0 ? 0 : Math.Round(usedItems / sold * 100);
+
+    ViewData["Title"] = "Home Page";    
+}
+
+<article class="content dashboard-page">
+    <section class="section">
+        <div class="row sameheight-container">
+            <div class="col col-12 col-sm-12 col-md-6 col-xl-5 stats-col">
+                <div class="card sameheight-item stats" data-exclude="xs">
+                    <div class="card-block">
+                        <div class="title-block">
+                            <h4 class="title"> Stats </h4>
+                            <p class="title-description">
+
+                            </p>
+                        </div>
+                        <div class="row row-sm stats-container">
+                            <div class="col-12 col-sm-6 stat-col">
+                                <div class="stat-icon">
+                                    <i class="fa fa-rocket"></i>
+                                </div>
+                                <div class="stat">
+                                    <div class="value"> @activeItems </div>
+                                    <div class="name"> Active vouchers </div>
+                                </div>
+                                <div class="progress stat-progress">
+                                    <div class="progress-bar" style="width: @activePerc%;"></div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 stat-col">
+                                <div class="stat-icon">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </div>
+                                <div class="stat">
+                                    <div class="value"> @sold </div>
+                                    <div class="name"> Vouchers sold this month</div>
+                                </div>
+                                <div class="progress stat-progress">
+                                    <div class="progress-bar" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6  stat-col">
+                                <div class="stat-icon">
+                                    <i class="fa fa-list-alt"></i>
+                                </div>
+                                <div class="stat">
+                                    <div class="value"> @usedItems </div>
+                                    <div class="name"> Vouchers used this month </div>
+                                </div>
+                                <div class="progress stat-progress">
+                                    <div class="progress-bar" style="width: @usedPerc%;"></div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6  stat-col">
+                                <div class="stat-icon">
+                                    <i class="fa fa-gavel"></i>
+                                </div>
+                                <div class="stat">
+                                    <div class="value"> @totalItems </div>
+                                    <div class="name"> Total vouchers sold </div>
+                                </div>
+                                <div class="progress stat-progress">
+                                    <div class="progress-bar" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6  stat-col">
+                                <div class="stat-icon">
+                                    <i class="fa fa-line-chart"></i>
+                                </div>
+                                <div class="stat">
+                                    <div class="value"> @monthlyRevenue.ToString("R0.00") </div>
+                                    <div class="name"> Monthly income </div>
+                                </div>
+                                <div class="progress stat-progress">
+                                    <div class="progress-bar" style="width: @RevPerc%;"></div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 stat-col">
+                                <div class="stat-icon">
+                                    <i class="fa fa-dollar"></i>
+                                </div>
+                                <div class="stat">
+                                    <div class="value"> @TotalRev.ToString("R0.00") </div>
+                                    <div class="name"> Total income </div>
+                                </div>
+                                <div class="progress stat-progress">
+                                    <div class="progress-bar" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-12 col-sm-12 col-md-6 col-xl-7 history-col">
+                <div class="card sameheight-item" data-exclude="xs" id="dashboard-history">
+                    <div class="card-header card-header-sm bordered">
+                        <div class="header-block">
+                            <h3 class="title">History</h3>
+                        </div>
+                        <ul class="nav nav-tabs pull-right" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#visits" role="tab" data-toggle="tab">Visits</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#downloads" role="tab" data-toggle="tab">Downloads</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-block">
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active fade show" id="visits">
+                                <p class="title-description"> Sales for the last 30 days </p>
+                                <div id="dashboard-visits-chart"></div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="downloads">
+                                <p class="title-description"> Number of downloads last 30 days </p>
+                                <div id="dashboard-downloads-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="row sameheight-container">
+            <div class="col-xl-6">
+                <div class="card sameheight-item">
+                    <div class="card-block">
+                        <!-- Nav tabs -->
+                        <div class="card-title-block">
+                            <h3 class="title"> Transaction </h3>
+                        </div>
+                        <ul class="nav nav-tabs nav-tabs-bordered">
+                            <li class="nav-item">
+                                <a href="#voucher" class="nav-link active" data-target="#voucher" data-toggle="tab" aria-controls="voucher" role="tab">Voucher</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#profile" class="nav-link" data-target="#profile" aria-controls="profile" data-toggle="tab" role="tab">Spinner</a>
+                            </li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content tabs-bordered">
+                            <div class="tab-pane fade in active" id="voucher">
+                                @{
+                                    await Html.RenderPartialAsync("_GenerateVoucher", (Voucher)TempData["voucher"]);
+                                }
+                            </div>
+                            <div class="tab-pane fade" id="profile">
+                                <h4>Profile Tab</h4>
+                                <p>Lucky spinner coming soon</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-block -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col-xl-6 -->
+            <div class="col-xl-6">
+                <div class="card sameheight-item">
+                    <div class="card-block">
+                        <div class="card-title-block">
+                            <h3 class="title"> Pill Tabs </h3>
+                        </div>
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-pills">
+                            <li class="nav-item">
+                                <a href="" class="nav-link active" data-target="#home-pills" aria-controls="home-pills" data-toggle="tab" role="tab">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="" class="nav-link" data-target="#profile-pills" aria-controls="profile-pills" data-toggle="tab" role="tab">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="" class="nav-link" data-target="#messages-pills" aria-controls="messages-pills" data-toggle="tab" role="tab">Messages</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="" class="nav-link" data-target="#settings-pills" aria-controls="settings-pills" data-toggle="tab" role="tab">Settings</a>
+                            </li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="home-pills">
+                                <h4>Home Tab</h4>
+                                @{
+                                    await Html.RenderPartialAsync("_Spinner");
+                                }
+                            </div>
+                            <div class="tab-pane fade" id="profile-pills">
+                                <h4>Profile Tab</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            </div>
+                            <div class="tab-pane fade" id="messages-pills">
+                                <h4>Messages Tab</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            </div>
+                            <div class="tab-pane fade" id="settings-pills">
+                                <h4>Settings Tab</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-block -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col-xl-6 -->
+        </div>
+    </section>
+</article>

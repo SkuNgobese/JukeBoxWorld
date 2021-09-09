@@ -1,0 +1,36 @@
+﻿@model JooBoxWorld.Models.Voucher
+
+@{
+    
+}
+<article class="content forms-page">
+    <section class="section">
+        <div class="row sameheight-container">
+            <div class="col-md-6">
+                <div class="card card-block sameheight-item">
+                    <div class="title-block">
+                        <h3 class="title"> Default Bootstrap Inputs </h3>
+                    </div>
+                    <form asp-action="Generate">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <fieldset class="form-group">
+                            <label class="control-label" asp-for="Amount"></label>
+                            <input type="text" class="form-control" asp-for="Amount" />
+                        </fieldset>
+                        <div class="form-group">
+                            <label class="control-label">Disabled Input</label>
+                            <input type="text" disabled="disabled" class="form-control underlined" placeholder="Disabled input text">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</article>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

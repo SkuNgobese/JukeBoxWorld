@@ -1,0 +1,17 @@
+﻿
+/*#canvasContainer
+{
+    background-image: url(/images/wheelBackground.png);
+    background-repeat: no-repeat;*/ /* Ensure that background does not repeat */
+    /*background-position: center;*/ /* Ensure image is centred */
+    /*width: 700px;*/ /* Width and height should at least be the same as the canvas */
+    /*height: 700px;
+}*/
+
+#canvasContainer {
+    background-image: url(/images/wheelBackground.png);
+    background-repeat: no-repeat; /* Ensure that background does not repeat */
+    background-position: center; /* Ensure image is centred */
+    width: 400px; /* Width and height should at least be the same as the canvas */
+    height: 400px;
+}

@@ -1,0 +1,52 @@
+﻿@model IEnumerable<JooBoxWorld.Models.ViewModels.FieldManagersViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+        <table class="table table-hover table-bordered" id="table_id" style="width: 100%">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Sales
+                    </th>
+                    <th>
+                        Agents
+                    </th>
+                    <th>
+                        Since
+                    </th>
+                    <th>
+                        Options
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    var createdDate = item.CreatedDate.ToString("dd-MMM-yyyy");
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item._Sales)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NumberOfAgents)
+                        </td>
+                        <td>
+                            @createdDate
+                        </td>
+                        <td>
+                            @Html.ActionLink("nfo", "Details", new { id = item.FielManagerId }, new { @class = "btn btn-info icon-btn fa fa-info", @style = "padding:1px" }) |
+                            @Html.ActionLink("Edit", "Edit", new { id = item.FielManagerId }, new { @class = "btn btn-warning icon-btn fa fa-edit", @style = "padding:1px" }) |
+                            @Html.ActionLink("Del", "Delete", new { id = item.FielManagerId }, new { @class = "btn btn-danger icon-btn fa fa-trash", @style = "padding:1px" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>

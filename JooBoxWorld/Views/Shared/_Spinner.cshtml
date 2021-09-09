@@ -1,0 +1,56 @@
+﻿
+<html>
+<head>
+    <script type="text/javascript" src="~/js/Winwheel.min.js"></script>
+    <link rel="stylesheet" href="~/css/Winwheel.css">
+</head>
+<body>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <div id="canvasContainer">
+                <canvas id="canvas" width="400" height="400">
+                    Canvas not supported, please user another browser.
+                </canvas>
+                <button onClick="theWheel.startAnimation();">Spin the Wheel</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        //let wheelWithBackground = new Winwheel({
+        //    'outerRadius': 146,    // Use these three properties to
+        //    'centerX': 280,    // correctly position the wheel
+        //    'centerY': 200,    // over the background.
+        //    'lineWidth': 2,
+        //    'numSegments': 4,
+        //    'segments':
+        //        [
+        //            { 'fillStyle': '#eae56f', 'text': 'Prize One' },
+        //            { 'fillStyle': '#89f26e', 'text': 'Prize Two' },
+        //            { 'fillStyle': '#7de6ef', 'text': 'Prize Three' },
+        //            { 'fillStyle': '#e7706f', 'text': 'Prize Four' }
+        //        ]
+        //});
+        let theWheel = new Winwheel({
+            'outerRadius': 146,    // Use these three properties to
+            'centerX': 200,    // correctly position the wheel
+            'centerY': 201,    // over the background.
+            'lineWidth': 2,
+            'numSegments': 4,
+            'segments':
+                [
+                    { 'fillStyle': '#eae56f', 'text': 'Prize One' },
+                    { 'fillStyle': '#89f26e', 'text': 'Prize Two' },
+                    { 'fillStyle': '#7de6ef', 'text': 'Prize Three' },
+                    { 'fillStyle': '#e7706f', 'text': 'Prize Four' }
+                ],
+            'animation':                   // Note animation properties passed in constructor parameters.
+            {
+                'type': 'spinToStop',  // Type of animation.
+                'duration': 5,             // How long the animation is to take in seconds.
+                'spins': 8              // The number of complete 360 degree rotations the wheel is to do.
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+﻿@model JooBoxWorld.Models.Voucher
+@{
+    var voucher = TempData["voucherN"];
+
+    //var amount = TempData["voucherA"];
+    //var dAmount = Convert.ToDouble(amount);
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm("Generate", "Vouchers", FormMethod.Post))
+        {
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <fieldset class="form-group">
+                <label class="control-label" asp-for="Amount"></label>
+                <div class="input-group">
+                    <span class="input-group-prepend">
+                        <span class="input-group-text">R</span>
+                    </span>
+                    <input type="text" class="form-control" asp-for="Amount" />
+                    <span class="input-group-append">
+                        <span class="input-group-text">.00</span>
+                    </span>
+                </div>
+            </fieldset>
+            <div class="form-group">
+                <label class="control-label">Your voucher</label>
+                <input type="text" readonly="readonly" class="form-control boxed" value="@voucher">
+            </div>
+
+            <input onclick="return confirm('Confirm transaction!')" type="submit" value="Get Voucher" class="btn btn-primary" />
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script>
+    $('#apply-form input').blur(function () {
+        if (!$(this).val()) {
+            $(this).parents('div').addClass('warning');
+        }
+    });
+</script>
